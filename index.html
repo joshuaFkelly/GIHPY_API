@@ -8,7 +8,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="/assets/CSS/style.css">
-    <script src="/assets/JavaScript/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js" defer></script>
+    <script src="/assets//JavaScript//axios.js" defer></script>
+    <script src="/assets/JavaScript/buttons.js" defer></script>
     <title>GIPHY API</title>
 </head>
 
@@ -33,124 +35,13 @@
                 </div>
             </div>
             <!-- GIPHY Buttons -->
-            <div id="animeButtons" class="d-flex flex-wrap justify-content-center mt-5">
-                <button type="button" class="btn btn-outline-primary m-1">Naruto</button>
-                <button type="button" class="btn btn-outline-primary m-1">CowBoy Bebop</button>
-                <button type="button" class="btn btn-outline-primary m-1">Dragon Ball Z</button>
-                <button type="button" class="btn btn-outline-primary m-1">Dragon Ball Super</button>
-                <button type="button" class="btn btn-outline-primary m-1">Attack on Titan</button>
-                <button type="button" class="btn btn-outline-primary m-1">Inuyasha</button>
-                <button type="button" class="btn btn-outline-primary m-1">Bleach</button>
-                <button type="button" class="btn btn-outline-primary m-1">Naruto Shippuden</button>
-                <button type="button" class="btn btn-outline-primary m-1">Dragon Ball GT</button>
-                <button type="button" class="btn btn-outline-primary m-1">Howls Moving Castle</button>
-                <button type="button" class="btn btn-outline-primary m-1">Spirited Away</button>
-                <button type="button" class="btn btn-outline-primary m-1">Seven Deadly Sins</button>
-                <button type="button" class="btn btn-outline-primary m-1">A quiet World</button>
-                <button type="button" class="btn btn-outline-primary m-1">Death Note</button>
-                <button type="button" class="btn btn-outline-primary m-1">Baki</button>
-                <button type="button" class="btn btn-outline-primary m-1">Black Butler</button>
-            </div>
+            <div id="buttons" class="d-flex flex-wrap justify-content-center mt-5"></div>
         </div>
     </section>
     <!-- All GIPHYs Sections-->
     <section>
-        <div class="container bg-secondary">
-            <div class="row g-3">
-                <div class="col-6">
-                    <div class="card">
-                        <header class="card-header text-center">
-                            GIPHY Name
-                        </header>
-                        <img src="..." class="card-img-top bg-dark" alt="GIPHY">
-                    </div>
-                </div>
-
-                <div class="col-6">
-                    <div class="card">
-                        <header class="card-header text-center">
-                            GIPHY Name
-                        </header>
-                        <img src="..." class="card-img-top bg-dark" alt="GIPHY">
-                    </div>
-                </div>
-
-                <div class="col-6">
-                    <div class="card">
-                        <header id="giphyName" class="card-header text-center">
-                            GIPHY Name
-                        </header>
-                        <img id="giphyImage" src="..." class="card-img-top bg-dark" alt="GIPHY">
-                    </div>
-                </div>
-
-                <div class="col-6">
-                    <div class="card">
-                        <header class="card-header text-center">
-                            GIPHY Name
-                        </header>
-                        <img src="..." class="card-img-top bg-dark" alt="GIPHY">
-                    </div>
-                </div>
-
-                <div class="col-6">
-                    <div class="card">
-                        <header class="card-header text-center">
-                            GIPHY Name
-                        </header>
-                        <img src="..." class="card-img-top bg-dark" alt="GIPHY">
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="card">
-                        <header class="card-header text-center">
-                            GIPHY Name
-                        </header>
-                        <img src="..." class="card-img-top bg-dark" alt="GIPHY">
-                    </div>
-                </div>
-
-
-                <div class="col-6">
-                    <div class="card">
-                        <header class="card-header text-center">
-                            GIPHY Name
-                        </header>
-                        <img src="..." class="card-img-top bg-dark" alt="GIPHY">
-                    </div>
-                </div>
-
-                <div class="col-6">
-                    <div class="card">
-                        <header class="card-header text-center">
-                            GIPHY Name
-                        </header>
-                        <img src="..." class="card-img-top bg-dark" alt="GIPHY">
-                    </div>
-                </div>
-
-                <div class="col-6">
-                    <div class="card">
-                        <header class="card-header text-center">
-                            GIPHY Name
-                        </header>
-                        <img src="..." class="card-img-top bg-dark" alt="GIPHY">
-                    </div>
-                </div>
-
-                <div class="col-6">
-                    <div class="card">
-                        <header class="card-header text-center">
-                            GIPHY Name
-                        </header>
-                        <img src="..." class="card-img-top bg-dark" alt="GIPHY">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
+        <div class="container bg-secondary p-5">
+            <div id="giphs" class="row g-3"></div>
         </div>
     </section>
 
