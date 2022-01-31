@@ -78,14 +78,19 @@ function showOutput(res) {
   const giphsArray = res.data.data;
   giphsArray.forEach((giph, index, giphs) => {
     console.log(giph.images.looping.mp4);
-    let looping = giph.images.looping.mp4;
-    displayGiphs(giphs);
+    displayGiphs(giphs, giph);
   });
 }
-
+// Start/Stop Loop
+function startLoop(params) {
+  if (condition) {
+  }
+}
 // HTML for GIPHs
-function displayGiphs(giphs) {
+function displayGiphs(giphs, giph) {
   giphsSection.innerHTML = `
+
+
   
                 <div class="col-6">
                       <div class="card">
@@ -168,14 +173,22 @@ function displayGiphs(giphs) {
                       </div>
                   </div>
       `;
+
+  // let img = document.querySelectorAll("img");
+  // let still = giph.images.original_still.url;
+  // let looping = giph.images.looping.mp4;
+
+  // img.addEventListener("click", () => {
+  //   let imgUrl = img.getAttribute("src");
+
+  //   if (imgUrl === still) {
+  //     img.setAttribute("src", looping);
+  //   } else {
+  //     img.setAttribute("src", still);
+  //   }
+  // });
 }
-// Start Loop, Stop Loop
-function loopingGiphy(giphs, index) {
-  const stillImg = giphs[index].image.original_still.url;
-  const loopingImg = giphs[index.image.original_still];
-  if (stillImg) {
-  }
-}
+
 // Show Error
 function showError(err) {
   const error = err;
