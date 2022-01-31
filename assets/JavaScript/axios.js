@@ -1,6 +1,8 @@
 const giphsSection = document.querySelector("#giphs");
 const btnGroup = document.querySelector("#buttons");
 const deleteBtn = document.querySelector("#delete");
+const giphySearch = document.querySelector("#searchBar");
+const addGiphy = document.querySelector("#submitBtn");
 const topics = [
   "Naruto",
   "CowBoy Bebop",
@@ -21,7 +23,6 @@ const topics = [
   "Evangelion",
   "Full Metal Alchemist",
 ];
-const limit = 10;
 // GET
 function getAnime(giphName) {
   let giph = giphName.target.id;
@@ -40,8 +41,35 @@ function getAnime(giphName) {
       // always executed
     });
 }
-
-// PUT
+// Always load preset buttons
+document.onload = displayButtons();
+// GIPHY Buttons
+function displayButtons(params) {
+  topics.forEach((button, index, buttons) => {
+    const giphyBtn = document.createElement("button");
+    giphyBtn.setAttribute("type", "button");
+    giphyBtn.addEventListener("click", getAnime);
+    giphyBtn.classList = "btn btn-outline-primary m-1";
+    giphyBtn.id = `${buttons[index]}`;
+    giphyBtn.textContent += buttons[index];
+    btnGroup.append(giphyBtn);
+  });
+}
+// Update Buttons
+function addButton() {
+  const newGiphy = giphySearch.value;
+  const giphyBtn = document.createElement("button");
+  console.log(newGiphy);
+  console.log(topics);
+  topics.push(newGiphy);
+  giphyBtn.setAttribute("type", "button");
+  giphyBtn.addEventListener("click", getAnime);
+  giphyBtn.classList = "btn btn-outline-primary m-1";
+  giphyBtn.id = `${newGiphy}`;
+  giphyBtn.textContent += newGiphy;
+  btnGroup.append(giphyBtn);
+}
+addGiphy.addEventListener("click", addButton);
 
 // GIPHYs
 function showOutput(res) {
@@ -49,23 +77,6 @@ function showOutput(res) {
   giphsArray.forEach((giph, index, giphs) => {
     displayGiphs(giphs);
   });
-}
-// GIPHY Buttons
-topics.forEach((button, index, buttons) => {
-  const giphyBtn = document.createElement("button");
-  giphyBtn.setAttribute("type", "button");
-  giphyBtn.addEventListener("click", getAnime);
-  giphyBtn.classList = "btn btn-outline-primary m-1";
-  giphyBtn.id = `${buttons[index]}`;
-  giphyBtn.textContent += buttons[index];
-  btnGroup.append(giphyBtn);
-});
-// Show Error
-function showError(err) {
-  const error = err;
-  giphsSection.innerHTML = `
-  <h1 class ="text-danger text-center"> ERROR 404: GIPHY NOT FOUND </h1>
- `;
 }
 // HTML for GIPHs
 function displayGiphs(giphs) {
@@ -152,4 +163,12 @@ function displayGiphs(giphs) {
                       </div>
                   </div>
       `;
+}
+
+// Show Error
+function showError(err) {
+  const error = err;
+  giphsSection.innerHTML = `
+  <h1 class ="text-danger text-center"> ERROR 404: GIPHY NOT FOUND </h1>
+  `;
 }
