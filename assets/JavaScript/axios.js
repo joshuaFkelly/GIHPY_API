@@ -77,6 +77,8 @@ function addButton() {
 function showOutput(res) {
   const giphsArray = res.data.data;
   giphsArray.forEach((giph, index, giphs) => {
+    console.log(giph.images.looping.mp4);
+    let looping = giph.images.looping.mp4;
     displayGiphs(giphs);
   });
 }
@@ -167,7 +169,13 @@ function displayGiphs(giphs) {
                   </div>
       `;
 }
-
+// Start Loop, Stop Loop
+function loopingGiphy(giphs, index) {
+  const stillImg = giphs[index].image.original_still.url;
+  const loopingImg = giphs[index.image.original_still];
+  if (stillImg) {
+  }
+}
 // Show Error
 function showError(err) {
   const error = err;
