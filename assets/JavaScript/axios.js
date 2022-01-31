@@ -21,22 +21,21 @@ const topics = [
   "Evangelion",
   "Full Metal Alchemist",
 ];
-
+const limit = 10;
 // GET
 function getAnime(giphName) {
   let giph = giphName.target.id;
+  let url = `https://api.giphy.com/v1/gifs/search?api_key=q8DYV0M8eXqbtdQxXfnOJHMbFjtuG0Gz&q=${giph}&limit=10&offset=0&rating=r&lang=en`;
   axios
-    .get(
-      `https://api.giphy.com/v1/gifs/search?api_key=q8DYV0M8eXqbtdQxXfnOJHMbFjtuG0Gz&q=${giph}&limit=10&offset=0&rating=r&lang=en`,
-      { timeout: 3000 }
-    )
+    .get(url, { timeout: 3000 })
     .then(function (res) {
       // handle success
       showOutput(res);
+      console.log(res.data);
     })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
+    .catch(function (err) {
+      // handle err
+      showError(err);
     })
     .then(function () {
       // always executed
@@ -73,3 +72,11 @@ topics.forEach((button, index, buttons) => {
   giphyBtn.textContent += buttons[index];
   btnGroup.append(giphyBtn);
 });
+// Show Error
+function showError(err) {
+  const error = err;
+  console.log(error);
+  giphsSection.innerHTML = `
+  <h1 class ="text-danger"> ${err} </h1>
+ `;
+}
