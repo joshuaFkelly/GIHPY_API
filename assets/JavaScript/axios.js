@@ -23,6 +23,9 @@ const topics = [
   "Evangelion",
   "Full Metal Alchemist",
 ];
+// Always load preset buttons
+document.onload = displayButtons();
+
 // GET
 function getAnime(giphName) {
   let giph = giphName.target.id;
@@ -41,10 +44,9 @@ function getAnime(giphName) {
       // always executed
     });
 }
-// Always load preset buttons
-document.onload = displayButtons();
+
 // GIPHY Buttons
-function displayButtons(params) {
+function displayButtons() {
   topics.forEach((button, index, buttons) => {
     const giphyBtn = document.createElement("button");
     giphyBtn.setAttribute("type", "button");
@@ -55,6 +57,7 @@ function displayButtons(params) {
     btnGroup.append(giphyBtn);
   });
 }
+
 // Update Buttons
 function addButton() {
   const newGiphy = giphySearch.value;
@@ -69,7 +72,6 @@ function addButton() {
   giphyBtn.textContent += newGiphy;
   btnGroup.append(giphyBtn);
 }
-addGiphy.addEventListener("click", addButton);
 
 // GIPHYs
 function showOutput(res) {
@@ -78,6 +80,7 @@ function showOutput(res) {
     displayGiphs(giphs);
   });
 }
+
 // HTML for GIPHs
 function displayGiphs(giphs) {
   giphsSection.innerHTML = `
@@ -172,3 +175,6 @@ function showError(err) {
   <h1 class ="text-danger text-center"> ERROR 404: GIPHY NOT FOUND </h1>
   `;
 }
+
+// Event Listener
+addGiphy.addEventListener("click", addButton);
