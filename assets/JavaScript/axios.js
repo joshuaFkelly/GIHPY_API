@@ -1,10 +1,11 @@
 const giphsSection = document.querySelector("#giphs");
 const btnGroup = document.querySelector("#buttons");
+const deleteBtn = document.querySelector("#delete");
 const topics = [
   "Naruto",
   "CowBoy Bebop",
   "Dragon Ball Z",
-  "Dragon Bakk Super",
+  "Dragon Ball Super",
   "Attack on Titan",
   "Inuyasha",
   "Bleach",
@@ -21,12 +22,13 @@ const topics = [
   "Full Metal Alchemist",
 ];
 
-// Get Request
+// GET
 function getAnime(giphName) {
   let giph = giphName.target.id;
   axios
     .get(
-      `https://api.giphy.com/v1/gifs/search?api_key=q8DYV0M8eXqbtdQxXfnOJHMbFjtuG0Gz&q=${giph}&limit=10&offset=0&rating=r&lang=en`
+      `https://api.giphy.com/v1/gifs/search?api_key=q8DYV0M8eXqbtdQxXfnOJHMbFjtuG0Gz&q=${giph}&limit=10&offset=0&rating=r&lang=en`,
+      { timeout: 3000 }
     )
     .then(function (res) {
       // handle success
@@ -41,7 +43,11 @@ function getAnime(giphName) {
     });
 }
 
-// Display Giphs
+//DELETE
+
+// PUT
+
+// GIPHYs
 function showOutput(res) {
   const giphsArray = res.data.data;
   giphsArray.forEach((giph, index, giphs) => {
@@ -57,8 +63,7 @@ function showOutput(res) {
       `;
   });
 }
-
-// Buttons
+// GIPHY Buttons
 topics.forEach((button, index, buttons) => {
   const giphyBtn = document.createElement("button");
   giphyBtn.setAttribute("type", "button");
