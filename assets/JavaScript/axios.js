@@ -10,38 +10,35 @@ const topics = [
   "Dragon Ball Super",
   "Attack on Titan",
   "Inuyasha",
-  "Bleach",
-  "Naruto Shippuden",
   "Dragon Ball GT",
   "Howls Moving Castle",
   "Spirited Away",
   "Seven Deadly Sins",
-  "A Quiet World",
   "Death Note",
-  "Baki",
   "Black Butler",
   "Evangelion",
   "Full Metal Alchemist",
 ];
+const api_key = "q8DYV0M8eXqbtdQxXfnOJHMbFjtuG0Gz";
+const limit = 10;
 // Always load preset buttons
 document.onload = displayButtons();
 
 // GET
-function getAnime(giphName) {
-  let giph = giphName.target.id;
-  let url = `https://api.giphy.com/v1/gifs/search?api_key=q8DYV0M8eXqbtdQxXfnOJHMbFjtuG0Gz&q=${giph}&limit=10&offset=0&rating=r&lang=en`;
+function getAnime(e) {
+  const q = e.target.id;
+  const url = `https://api.giphy.com/v1/gifs/search?api_key=${api_key}&q=${q}&limit=${limit}&offset=0&rating=&lang=en`;
   axios
     .get(url, { timeout: 3000 })
     .then(function (res) {
+      console.log(res.data.data);
       // handle success
-      showOutput(res);
+      displayGIPHYs(res);
     })
+    .then(function () {})
     .catch(function (err) {
       // handle err
       showError(err);
-    })
-    .then(function () {
-      // always executed
     });
 }
 
@@ -53,7 +50,7 @@ function displayButtons() {
     giphyBtn.addEventListener("click", getAnime);
     giphyBtn.classList = "btn btn-outline-primary m-1";
     giphyBtn.id = `${buttons[index]}`;
-    giphyBtn.textContent += buttons[index];
+    giphyBtn.textContent = `${buttons[index]}`;
     btnGroup.append(giphyBtn);
   });
 }
@@ -62,8 +59,6 @@ function displayButtons() {
 function addButton() {
   const newGiphy = giphySearch.value;
   const giphyBtn = document.createElement("button");
-  console.log(newGiphy);
-  console.log(topics);
   topics.push(newGiphy);
   giphyBtn.setAttribute("type", "button");
   giphyBtn.addEventListener("click", getAnime);
@@ -74,119 +69,130 @@ function addButton() {
 }
 
 // GIPHYs
-function showOutput(res) {
+function displayGIPHYs(res) {
   const giphsArray = res.data.data;
-  giphsArray.forEach((giph, index, giphs) => {
-    console.log(giph.images.looping.mp4);
-    displayGiphs(giphs, giph);
+
+  giphsArray.forEach((giph) => {
+    // console.log(giph);
+    // giphsSection.innerHTML = `
+    // <div class="col-6">
+    //   <div class="card">
+    //       <header class="card-header text-center">
+    //          <h5> ${giph.title} </h5>
+    //       </header>
+    //       <img src= "${giph.images.original_still.url}" class="card-img-top bg-dark" alt="GIPHY">
+    //   </div>
+    // </div>
+    // `;
   });
-}
-// Start/Stop Loop
-function startLoop(params) {
-  if (condition) {
-  }
-}
-// HTML for GIPHs
-function displayGiphs(giphs, giph) {
+
   giphsSection.innerHTML = `
-
-
-  
-                <div class="col-6">
-                      <div class="card">
-                          <header class="card-header text-center">
-                             <h5> ${giphs[0].title} </h5>
-                          </header>
-                          <img src= "${giphs[0].images.original_still.url}" class="card-img-top bg-dark" alt="GIPHY">
-                      </div>
-                  </div>
-                                  <div class="col-6">
-                      <div class="card">
-                          <header class="card-header text-center">
-                             <h5> ${giphs[1].title} </h5>
-                          </header>
-                          <img src= "${giphs[1].images.original_still.url}" class="card-img-top bg-dark" alt="GIPHY">
-                      </div>
-                  </div>
-                                  <div class="col-6">
-                      <div class="card">
-                          <header class="card-header text-center">
-                             <h5> ${giphs[2].title} </h5>
-                          </header>
-                          <img src= "${giphs[2].images.original_still.url}" class="card-img-top bg-dark" alt="GIPHY">
-                      </div>
-                  </div>
-                                  <div class="col-6">
-                      <div class="card">
-                          <header class="card-header text-center">
-                             <h5> ${giphs[3].title} </h5>
-                          </header>
-                          <img src= "${giphs[3].images.original_still.url}" class="card-img-top bg-dark" alt="GIPHY">
-                      </div>
-                  </div>
-                                  <div class="col-6">
-                      <div class="card">
-                          <header class="card-header text-center">
-                             <h5> ${giphs[4].title} </h5>
-                          </header>
-                          <img src= "${giphs[4].images.original_still.url}" class="card-img-top bg-dark" alt="GIPHY">
-                      </div>
-                  </div>
-                                  <div class="col-6">
-                      <div class="card">
-                          <header class="card-header text-center">
-                             <h5> ${giphs[5].title} </h5>
-                          </header>
-                          <img src= "${giphs[5].images.original_still.url}" class="card-img-top bg-dark" alt="GIPHY">
-                      </div>
-                  </div>
-                                  <div class="col-6">
-                      <div class="card">
-                          <header class="card-header text-center">
-                             <h5> ${giphs[6].title} </h5>
-                          </header>
-                          <img src= "${giphs[6].images.original_still.url}" class="card-img-top bg-dark" alt="GIPHY">
-                      </div>
-                  </div>
-                                  <div class="col-6">
-                      <div class="card">
-                          <header class="card-header text-center">
-                             <h5> ${giphs[7].title} </h5>
-                          </header>
-                          <img src= "${giphs[7].images.original_still.url}" class="card-img-top bg-dark" alt="GIPHY">
-                      </div>
-                  </div>
-                                  <div class="col-6">
-                      <div class="card">
-                          <header class="card-header text-center">
-                             <h5> ${giphs[8].title} </h5>
-                          </header>
-                          <img src= "${giphs[8].images.original_still.url}" class="card-img-top bg-dark" alt="GIPHY">
-                      </div>
-                  </div>
-                               <div class="col-6">
-                      <div class="card">
-                          <header class="card-header text-center">
-                             <h5> ${giphs[9].title} </h5>
-                          </header>
-                          <img src= "${giphs[9].images.original_still.url}" class="card-img-top bg-dark" alt="GIPHY">
-                      </div>
-                  </div>
+        <div class="col-6">
+            <div class="card">
+                <header class="card-header text-center">
+                   <h5> ${giphsArray[0].title} </h5>
+                </header>
+                <img src= "${giphsArray[0].images.original_still.url}" class="card-img-top bg-dark" alt="GIPHY">
+            </div>
+        </div>
+    
+        <div class="col-6">
+          <div class="card">
+              <header class="card-header text-center">
+                 <h5> ${giphsArray[1].title} </h5>
+              </header>
+              <img src= "${giphsArray[1].images.original_still.url}" class="card-img-top bg-dark" alt="GIPHY">
+          </div>
+        </div>
+    
+        <div class="col-6">
+          <div class="card">
+              <header class="card-header text-center">
+                 <h5> ${giphsArray[2].title} </h5>
+              </header>
+              <img src= "${giphsArray[2].images.original_still.url}" class="card-img-top bg-dark" alt="GIPHY">
+          </div>
+        </div>
+    
+        <div class="col-6">
+          <div class="card">
+              <header class="card-header text-center">
+                 <h5> ${giphsArray[3].title} </h5>
+              </header>
+              <img src= "${giphsArray[3].images.original_still.url}" class="card-img-top bg-dark" alt="GIPHY">
+          </div>
+        </div>
+    
+        <div class="col-6">
+          <div class="card">
+              <header class="card-header text-center">
+                 <h5> ${giphsArray[4].title} </h5>
+              </header>
+              <img src= "${giphsArray[4].images.original_still.url}" class="card-img-top bg-dark" alt="GIPHY">
+          </div>
+        </div>
+    
+        <div class="col-6">
+          <div class="card">
+              <header class="card-header text-center">
+                 <h5> ${giphsArray[5].title} </h5>
+              </header>
+              <img src= "${giphsArray[5].images.original_still.url}" class="card-img-top bg-dark" alt="GIPHY">
+          </div>
+        </div>
+    
+        <div class="col-6">
+          <div class="card">
+              <header class="card-header text-center">
+                 <h5> ${giphsArray[6].title} </h5>
+              </header>
+              <img src= "${giphsArray[6].images.original_still.url}" class="card-img-top bg-dark" alt="GIPHY">
+          </div>
+        </div>
+    
+        <div class="col-6">
+          <div class="card">
+              <header class="card-header text-center">
+                 <h5> ${giphsArray[7].title} </h5>
+              </header>
+              <img src= "${giphsArray[7].images.original_still.url}" class="card-img-top bg-dark" alt="GIPHY">
+          </div>
+        </div>
+    
+        <div class="col-6">
+          <div class="card">
+              <header class="card-header text-center">
+                 <h5> ${giphsArray[8].title} </h5>
+              </header>
+              <img src= "${giphsArray[8].images.original_still.url}" class="card-img-top bg-dark" alt="GIPHY">
+          </div>
+        </div>
+    
+        <div class="col-6">
+          <div class="card">
+              <header class="card-header text-center">
+                 <h5> ${giphsArray[9].title} </h5>
+              </header>
+              <img src= "${giphsArray[9].images.original_still.url}" class="card-img-top bg-dark" alt="GIPHY">
+          </div>
+        </div>
       `;
-
-  // let img = document.querySelectorAll("img");
-  // let still = giph.images.original_still.url;
-  // let looping = giph.images.looping.mp4;
-
-  // img.addEventListener("click", () => {
-  //   let imgUrl = img.getAttribute("src");
-
-  //   if (imgUrl === still) {
-  //     img.setAttribute("src", looping);
-  //   } else {
-  //     img.setAttribute("src", still);
-  //   }
-  // });
+  const originalImgs = document.querySelectorAll("img");
+  originalImgs.forEach((img, index, imgs) => {
+    img.addEventListener("click", (e) => {
+      const imgElement = e.target;
+      console.log(imgElement);
+      const imgSrc = e.target.attributes.src.value;
+      console.log(imgSrc);
+      // const still = img.images.original_still.url
+      // const looping = img.images.original.url;
+      // if (imgSrc === still) {
+      //   img.setAttribute("src", looping);
+      // } else {
+      //   img.setAttribute("src", still);
+      // }
+    });
+  });
 }
 
 // Show Error
