@@ -76,6 +76,9 @@ function addButton() {
   btnGroup.append(giphyBtn);
 }
 
+// Event Listener
+addGiphy.addEventListener('click', addButton);
+
 // Display Giphs
 function displayGIPHYs(res) {
   const giphsArray = res.data.data;
@@ -231,6 +234,3 @@ function showError(err) {
   <h1 class ="text-danger text-center"> ${err} </h1>
   `;
 }
-
-// Event Listener
-addGiphy.addEventListener('click', addButton);
