@@ -1,207 +1,236 @@
-const giphsSection = document.querySelector("#giphs");
-const btnGroup = document.querySelector("#buttons");
-const deleteBtn = document.querySelector("#delete");
-const giphySearch = document.querySelector("#searchBar");
-const addGiphy = document.querySelector("#submitBtn");
+const giphsSection = document.querySelector('#giphs');
+const btnGroup = document.querySelector('#buttons');
+const deleteBtn = document.querySelector('#delete');
+const giphySearch = document.querySelector('#searchBar');
+const addGiphy = document.querySelector('#submitBtn');
 const topics = [
-  "Naruto",
-  "CowBoy Bebop",
-  "Dragon Ball Z",
-  "Dragon Ball Super",
-  "Attack on Titan",
-  "Inuyasha",
-  "Dragon Ball GT",
-  "Howls Moving Castle",
-  "Spirited Away",
-  "Seven Deadly Sins",
-  "Death Note",
-  "Black Butler",
-  "Evangelion",
-  "Full Metal Alchemist",
+  'Naruto',
+  'CowBoy Bebop',
+  'Dragon Ball Z',
+  'Dragon Ball Super',
+  'Attack on Titan',
+  'Inuyasha',
+  'Dragon Ball GT',
+  'Howls Moving Castle',
+  'Spirited Away',
+  'Seven Deadly Sins',
+  'Death Note',
+  'Black Butler',
+  'Evangelion',
+  'Full Metal Alchemist',
 ];
-const api_key = "q8DYV0M8eXqbtdQxXfnOJHMbFjtuG0Gz";
+const url = 'api.giphy.com/v1/gifs/search';
+const api_key = 'q8DYV0M8eXqbtdQxXfnOJHMbFjtuG0Gz';
 const limit = 10;
+const offset = 0;
+const rating = 'r';
+const lang = 'en';
+
 // Always load preset buttons
 document.onload = displayButtons();
 
 // GET
-function getAnime(e) {
-  const q = e.target.id;
-  const url = `https://api.giphy.com/v1/gifs/search?api_key=${api_key}&q=${q}&limit=${limit}&offset=0&rating=&lang=en`;
+function getAnime() {
+  const q = this.id;
   axios
-    .get(url, { timeout: 3000 })
+    .get(`https://${url}?api_key=${api_key}&q=${q}&limit=${limit}`, {
+      timeout: 3000,
+    })
     .then(function (res) {
-      console.log(res.data.data);
       // handle success
       displayGIPHYs(res);
     })
-    .then(function () {})
     .catch(function (err) {
       // handle err
       showError(err);
+      console.log(err);
     });
 }
 
 // GIPHY Buttons
 function displayButtons() {
-  topics.forEach((button, index, buttons) => {
-    const giphyBtn = document.createElement("button");
-    giphyBtn.setAttribute("type", "button");
-    giphyBtn.addEventListener("click", getAnime);
-    giphyBtn.classList = "btn btn-outline-primary m-1";
-    giphyBtn.id = `${buttons[index]}`;
-    giphyBtn.textContent = `${buttons[index]}`;
-    btnGroup.append(giphyBtn);
+  topics.forEach((topic, index, topics) => {
+    const btn = document.createElement('button');
+    btn.setAttribute('type', 'button');
+    btn.addEventListener('click', getAnime);
+    btn.classList = 'btn btn-outline-primary m-1';
+    btn.id += `${topic}`;
+    btn.textContent += `${topic}`;
+    btnGroup.append(btn);
   });
 }
 
 // Update Buttons
 function addButton() {
-  const newGiphy = giphySearch.value;
-  const giphyBtn = document.createElement("button");
-  topics.push(newGiphy);
-  giphyBtn.setAttribute("type", "button");
-  giphyBtn.addEventListener("click", getAnime);
-  giphyBtn.classList = "btn btn-outline-primary m-1";
-  giphyBtn.id = `${newGiphy}`;
-  giphyBtn.textContent += newGiphy;
+  const newGiphyName = giphySearch.value.replace(
+    /(^\w{1})|(\s+\w{1})/g,
+    (letter) => letter.toUpperCase()
+  );
+  const giphyBtn = document.createElement('button');
+  topics.push(newGiphyName);
+  giphyBtn.setAttribute('type', 'button');
+  giphyBtn.addEventListener('click', getAnime);
+  giphyBtn.classList = 'btn btn-outline-primary m-1';
+  giphyBtn.id = newGiphyName;
+  giphyBtn.textContent = newGiphyName;
   btnGroup.append(giphyBtn);
 }
 
-// GIPHYs
+// Display Giphs
 function displayGIPHYs(res) {
   const giphsArray = res.data.data;
+  giphsArray.forEach((giph, index, giphs) => {
+    giphsSection.innerHTML = `
+    <div class="col-6">
+      <div class="card">
+        <header class="card-header text-center">
+          <h5> ${giphs[0].title} </h5>
+        </header>
+        <img 
+          src= ${giphs[0].images.original_still.url} 
+          class="card-img-top bg-dark" 
+          alt="GIPHY"
+        >
+      </div>
+    </div>
 
-  giphsArray.forEach((giph) => {
-    // console.log(giph);
-    // giphsSection.innerHTML = `
-    // <div class="col-6">
-    //   <div class="card">
-    //       <header class="card-header text-center">
-    //          <h5> ${giph.title} </h5>
-    //       </header>
-    //       <img src= "${giph.images.original_still.url}" class="card-img-top bg-dark" alt="GIPHY">
-    //   </div>
-    // </div>
-    // `;
-  });
+    <div class="col-6">
+      <div class="card">
+        <header class="card-header text-center">
+          <h5> ${giphs[1].title} </h5>
+        </header>
+        <img 
+          src= ${giphs[1].images.original_still.url} 
+          class="card-img-top bg-dark" 
+          alt="GIPHY"
+        >
+      </div>
+    </div>
 
-  giphsSection.innerHTML = `
+    <div class="col-6">
+      <div class="card">
+        <header class="card-header text-center">
+          <h5> ${giphs[2].title} </h5>
+        </header>
+        <img 
+          src= ${giphs[2].images.original_still.url} 
+          class="card-img-top bg-dark" 
+          alt="GIPHY"
+        >
+      </div>
+    </div>
+
+    <div class="col-6">
+      <div class="card">
+        <header class="card-header text-center">
+          <h5> ${giphs[3].title} </h5>
+        </header>
+        <img 
+          src= ${giphs[3].images.original_still.url} 
+          class="card-img-top bg-dark" 
+          alt="GIPHY"
+        >
+      </div>
+    </div>
+
+    <div class="col-6">
+      <div class="card">
+        <header class="card-header text-center">
+          <h5> ${giphs[4].title} </h5>
+        </header>
+        <img 
+          src= ${giphs[4].images.original_still.url} 
+          class="card-img-top bg-dark" 
+          alt="GIPHY"
+        >
+      </div>
+    </div>
+
+    <div class="col-6">
+      <div class="card">
+        <header class="card-header text-center">
+          <h5> ${giphs[5].title} </h5>
+        </header>
+        <img 
+        src= ${giphs[5].images.original_still.url} 
+        class="card-img-top bg-dark" 
+        alt="GIPHY"
+        >
+      </div>
+    </div>
+
+    <div class="col-6">
+      <div class="card">
+        <header class="card-header text-center">
+          <h5> ${giphs[6].title} </h5>
+        </header>
+        <img 
+        src= ${giphs[6].images.original_still.url} 
+        class="card-img-top bg-dark" 
+        alt="GIPHY"
+        >
+      </div>
+    </div>
+
         <div class="col-6">
-            <div class="card">
-                <header class="card-header text-center">
-                   <h5> ${giphsArray[0].title} </h5>
-                </header>
-                <img src= "${giphsArray[0].images.original_still.url}" class="card-img-top bg-dark" alt="GIPHY">
-            </div>
-        </div>
-    
-        <div class="col-6">
-          <div class="card">
-              <header class="card-header text-center">
-                 <h5> ${giphsArray[1].title} </h5>
-              </header>
-              <img src= "${giphsArray[1].images.original_still.url}" class="card-img-top bg-dark" alt="GIPHY">
-          </div>
-        </div>
-    
-        <div class="col-6">
-          <div class="card">
-              <header class="card-header text-center">
-                 <h5> ${giphsArray[2].title} </h5>
-              </header>
-              <img src= "${giphsArray[2].images.original_still.url}" class="card-img-top bg-dark" alt="GIPHY">
-          </div>
-        </div>
-    
-        <div class="col-6">
-          <div class="card">
-              <header class="card-header text-center">
-                 <h5> ${giphsArray[3].title} </h5>
-              </header>
-              <img src= "${giphsArray[3].images.original_still.url}" class="card-img-top bg-dark" alt="GIPHY">
-          </div>
-        </div>
-    
-        <div class="col-6">
-          <div class="card">
-              <header class="card-header text-center">
-                 <h5> ${giphsArray[4].title} </h5>
-              </header>
-              <img src= "${giphsArray[4].images.original_still.url}" class="card-img-top bg-dark" alt="GIPHY">
-          </div>
-        </div>
-    
-        <div class="col-6">
-          <div class="card">
-              <header class="card-header text-center">
-                 <h5> ${giphsArray[5].title} </h5>
-              </header>
-              <img src= "${giphsArray[5].images.original_still.url}" class="card-img-top bg-dark" alt="GIPHY">
-          </div>
-        </div>
-    
-        <div class="col-6">
-          <div class="card">
-              <header class="card-header text-center">
-                 <h5> ${giphsArray[6].title} </h5>
-              </header>
-              <img src= "${giphsArray[6].images.original_still.url}" class="card-img-top bg-dark" alt="GIPHY">
-          </div>
-        </div>
-    
-        <div class="col-6">
-          <div class="card">
-              <header class="card-header text-center">
-                 <h5> ${giphsArray[7].title} </h5>
-              </header>
-              <img src= "${giphsArray[7].images.original_still.url}" class="card-img-top bg-dark" alt="GIPHY">
-          </div>
-        </div>
-    
-        <div class="col-6">
-          <div class="card">
-              <header class="card-header text-center">
-                 <h5> ${giphsArray[8].title} </h5>
-              </header>
-              <img src= "${giphsArray[8].images.original_still.url}" class="card-img-top bg-dark" alt="GIPHY">
-          </div>
-        </div>
-    
-        <div class="col-6">
-          <div class="card">
-              <header class="card-header text-center">
-                 <h5> ${giphsArray[9].title} </h5>
-              </header>
-              <img src= "${giphsArray[9].images.original_still.url}" class="card-img-top bg-dark" alt="GIPHY">
-          </div>
-        </div>
-      `;
-  const originalImgs = document.querySelectorAll("img");
-  originalImgs.forEach((img, index, imgs) => {
-    img.addEventListener("click", (e) => {
-      const imgElement = e.target;
-      console.log(imgElement);
-      const imgSrc = e.target.attributes.src.value;
-      console.log(imgSrc);
-      // const still = img.images.original_still.url
-      // const looping = img.images.original.url;
-      // if (imgSrc === still) {
-      //   img.setAttribute("src", looping);
-      // } else {
-      //   img.setAttribute("src", still);
-      // }
+      <div class="card">
+        <header class="card-header text-center">
+          <h5> ${giphs[7].title} </h5>
+        </header>
+        <img 
+          src= ${giphs[7].images.original_still.url} 
+          class="card-img-top bg-dark" 
+          alt="GIPHY"
+        >
+      </div>
+    </div>
+
+    <div class="col-6">
+      <div class="card">
+        <header class="card-header text-center">
+          <h5> ${giphs[8].title} </h5>
+        </header>
+        <img 
+          src= ${giphs[8].images.original_still.url}
+          class="card-img-top bg-dark" alt="GIPHY"
+        >
+      </div>
+    </div>
+
+    <div class="col-6">
+      <div class="card">
+        <header class="card-header text-center">
+          <h5> ${giphs[9].title} </h5>
+        </header>
+        <img 
+        src= ${giphs[9].images.original_still.url} 
+        class="card-img-top bg-dark" alt="GIPHY"
+        >
+      </div>
+    </div>
+    `;
+
+    const image = document.querySelectorAll('img');
+    image.forEach((img, i) => {
+      img.addEventListener('click', function (e) {
+        const looping = giphs[i].images.original.url;
+        const still = giphs[i].images.original_still.url;
+        if (this.src === still) {
+          this.setAttribute('src', looping);
+        } else {
+          this.setAttribute('src', still);
+        }
+      });
     });
   });
 }
 
 // Show Error
 function showError(err) {
-  const error = err;
   giphsSection.innerHTML = `
-  <h1 class ="text-danger text-center"> ERROR 404: GIPHY NOT FOUND </h1>
+  <h1 class ="text-danger text-center"> ${err} </h1>
   `;
 }
 
 // Event Listener
-addGiphy.addEventListener("click", addButton);
+addGiphy.addEventListener('click', addButton);
