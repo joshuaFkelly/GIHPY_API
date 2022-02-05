@@ -3,6 +3,8 @@ const btnGroup = document.querySelector('#buttons');
 const deleteBtn = document.querySelector('#delete');
 const giphySearch = document.querySelector('#searchBar');
 const addGiphy = document.querySelector('#submitBtn');
+const add10Btn = document.querySelector('#add10');
+const moreGiphsDiv = document.querySelector('#moreGiphs');
 const topics = [
   'Naruto',
   'CowBoy Bebop',
@@ -21,8 +23,9 @@ const topics = [
 ];
 const url = 'api.giphy.com/v1/gifs/search';
 const api_key = 'q8DYV0M8eXqbtdQxXfnOJHMbFjtuG0Gz';
-const limit = 10;
-const offset = 0;
+let limit = 10;
+let q = '';
+let offset = 0;
 const rating = 'r';
 const lang = 'en';
 
@@ -31,11 +34,14 @@ document.onload = displayButtons();
 
 // GET
 function getAnime() {
-  const q = this.id;
+  q = this.id;
   axios
-    .get(`https://${url}?api_key=${api_key}&q=${q}&limit=${limit}`, {
-      timeout: 3000,
-    })
+    .get(
+      `https://${url}?api_key=${api_key}&q=${q}&limit=${limit}&offset=${offset}&rating=${rating}&lang=${lang}`,
+      {
+        timeout: 3000,
+      }
+    )
     .then(function (res) {
       // handle success
       displayGIPHYs(res);
@@ -43,7 +49,6 @@ function getAnime() {
     .catch(function (err) {
       // handle err
       showError(err);
-      console.log(err);
     });
 }
 
@@ -82,6 +87,7 @@ addGiphy.addEventListener('click', addButton);
 // Display Giphs
 function displayGIPHYs(res) {
   const giphsArray = res.data.data;
+
   giphsArray.forEach((giph, index, giphs) => {
     giphsSection.innerHTML = `
     <div class="col-6">
